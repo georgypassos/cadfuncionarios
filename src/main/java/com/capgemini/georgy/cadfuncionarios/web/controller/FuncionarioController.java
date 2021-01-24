@@ -26,7 +26,7 @@ public class FuncionarioController {
 		return "Hello World";
 	}
 
-	@GetMapping("/funcionarios")
+	@GetMapping("/public/funcionarios")
 	public ResponseEntity<List<Funcionario>> getAllFuncionarios() {
 		try {
 			List<Funcionario> funcionarios = new ArrayList<Funcionario>();
