@@ -20,6 +20,7 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
 
+	//FIXME remover
 	@GetMapping({ "/hello" })
 	public String firstPage() {
 		return "Hello World";
