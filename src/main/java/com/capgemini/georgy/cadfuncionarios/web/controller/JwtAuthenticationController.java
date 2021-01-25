@@ -20,6 +20,10 @@ import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtRequest;
 import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtResponse;
 import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtTokenUtil;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
@@ -33,13 +37,15 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
 
+	@ApiOperation(value = "Obtém um token para um usuário credenciado")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Token obtido com sucesso")})
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> criaTokenAutenticacao(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final UserDetails userDetails = jwtInMemoryUserDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername());
+		final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.gerarToken(userDetails);
 

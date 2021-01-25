@@ -19,7 +19,7 @@ public class Ponto implements Serializable{
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne
 	private Funcionario funcionario;
@@ -28,11 +28,11 @@ public class Ponto implements Serializable{
 	
 	public Ponto() { }
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

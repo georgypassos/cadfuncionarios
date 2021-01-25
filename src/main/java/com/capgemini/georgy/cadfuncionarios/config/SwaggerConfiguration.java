@@ -31,11 +31,15 @@ public class SwaggerConfiguration {
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
-				.securityContexts(Arrays.asList(securityContext())).securitySchemes(Arrays.asList(apiKey())).select()
-				.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+		return new Docket(DocumentationType.SWAGGER_2)
+				.apiInfo(apiInfo())
+				.securityContexts(Arrays.asList(securityContext()))
+				.securitySchemes(Arrays.asList(apiKey()))
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.capgemini.georgy.cadfuncionarios"))
+				.paths(PathSelectors.any()).build();
 	}
-
+	
 	private ApiKey apiKey() {
 		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
 	}
