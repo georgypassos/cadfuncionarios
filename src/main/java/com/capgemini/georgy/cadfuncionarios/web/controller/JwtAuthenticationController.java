@@ -49,7 +49,7 @@ public class JwtAuthenticationController {
 
 		final String token = jwtTokenUtil.gerarToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse("Bearer " + token));
 	}
 
 	private void authenticate(String username, String password) throws Exception {
