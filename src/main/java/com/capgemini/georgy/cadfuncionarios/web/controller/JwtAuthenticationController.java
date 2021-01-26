@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtRequest;
 import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtResponse;
+import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtSecurityConstants;
 import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtTokenUtil;
 
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,8 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserDetailsService jwtInMemoryUserDetailsService;
 
-	@ApiOperation(value = "Obtém um token para um usuário credenciado")
+	@ApiOperation(value = "Obtém um token para um usuário credenciado",
+					notes = "O formato do json de resposta é { \"token\": \"Bearer token_gerado\" } ")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "Token obtido com sucesso")})
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -49,7 +51,7 @@ public class JwtAuthenticationController {
 
 		final String token = jwtTokenUtil.gerarToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse("Bearer " + token));
+		return ResponseEntity.ok(new JwtResponse(JwtSecurityConstants.TOKEN_PREFIX + token));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

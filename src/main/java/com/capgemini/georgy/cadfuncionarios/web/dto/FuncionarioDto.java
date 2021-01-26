@@ -11,6 +11,7 @@ public class FuncionarioDto {
 	private String contato;
 	private String funcao;
 	private String departamento;
+	private String status;
 	
 	public FuncionarioDto() { }
 
@@ -76,6 +77,14 @@ public class FuncionarioDto {
 
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

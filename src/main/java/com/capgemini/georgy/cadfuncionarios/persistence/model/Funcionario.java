@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.capgemini.georgy.cadfuncionarios.persistence.enums.StatusFuncionario;
+
 import springfox.documentation.annotations.ApiIgnore;
 
 @ApiIgnore
@@ -29,6 +31,7 @@ public class Funcionario implements Serializable{
 	private String contato;
 	private String funcao;
 	private String departamento;
+	private StatusFuncionario status;
 	
 	@OneToMany(mappedBy="funcionario")
 	private List<Ponto> listPonto;
@@ -97,6 +100,14 @@ public class Funcionario implements Serializable{
 
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
+	}
+
+	public StatusFuncionario getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusFuncionario status) {
+		this.status = status;
 	}
 
 	public List<Ponto> getListPonto() {

@@ -2,7 +2,6 @@ package com.capgemini.georgy.cadfuncionarios.web.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,21 +35,11 @@ public class FuncionarioController {
 	@ApiOperation(value = "Retorna todos os funcionários cadastrados (não requer autenticação)")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Lista de funcionários retornada com sucesso"),
-			@ApiResponse(code = 204, message = "Não há funcionários cadastrados"),
-			@ApiResponse(code = 500, message = "Ocorreu um erro interno no servidor") })
+			@ApiResponse(code = 204, message = "Não há funcionários cadastrados")})
 	@GetMapping("/public/funcionarios")
 	public ResponseEntity<List<FuncionarioDto>> getAllFuncionarios() {
-		try {
-			List<FuncionarioDto> listResult = funcionarioService.findAll();
 
-			if (listResult.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return new ResponseEntity<>(listResult, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return ResponseEntity.ok(funcionarioService.findAllAtivos());
 	}
 	
 	@ApiOperation(value = "Busca um funcionário pelo ID")
@@ -59,13 +48,8 @@ public class FuncionarioController {
 			@ApiResponse(code = 404, message = "ID do registro não localizado")})
 	@GetMapping("/funcionarios/{id}")
 	public ResponseEntity<FuncionarioDto> getFuncionarioById(@PathVariable("id") long id) {
-		Optional<FuncionarioDto> funcionarioData = funcionarioService.findById(id);
-
-		if (funcionarioData.isPresent()) {
-			return new ResponseEntity<>(funcionarioData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(funcionarioData.orElse(null), HttpStatus.NOT_FOUND);
-		}
+		
+		return ResponseEntity.ok(funcionarioService.findById(id));
 	}
 
 	@ApiOperation(value = "Cria um novo funcionário",
@@ -75,18 +59,14 @@ public class FuncionarioController {
 			@ApiResponse(code = 500, message = "Ocorreu um erro interno no servidor")})
 	@PostMapping("/funcionarios")
 	public ResponseEntity<FuncionarioDto> createFuncionario(@RequestBody FuncionarioDto funcionarioDto) {
-		try {
-			FuncionarioDto dto = funcionarioService.save(funcionarioDto);
-			
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-													  .path("/{id}")
-													  .buildAndExpand(dto.getId())
-													  .toUri();
+		FuncionarioDto dto = funcionarioService.save(funcionarioDto, null);
+		
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+												  .path("/{id}")
+												  .buildAndExpand(dto.getId())
+												  .toUri();
 
-			return ResponseEntity.created(location).body(dto);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		return ResponseEntity.created(location).body(dto);
 	}
 
 	@ApiOperation(value = "Atualiza um funcionário existente",
@@ -96,42 +76,24 @@ public class FuncionarioController {
 			@ApiResponse(code = 404, message = "ID do registro não localizado para atualização")})
 	@PutMapping("/funcionarios/{id}")
 	public ResponseEntity<FuncionarioDto> updateFuncionario(@PathVariable("id") long id, @RequestBody FuncionarioDto funcionarioDto) {
-		Optional<FuncionarioDto> funcionarioData = funcionarioService.findById(id);
+		funcionarioDto = funcionarioService.save(funcionarioDto, id);
+		
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					  .path("/{id}")
+					  .buildAndExpand(id)
+					  .toUri();
 
-		if (funcionarioData.isPresent()) {
-			FuncionarioDto dto = funcionarioData.get();
-			dto.setNome(funcionarioDto.getNome());
-			dto.setCpf(funcionarioDto.getCpf());
-			dto.setDtNascimento(funcionarioDto.getDtNascimento());
-			dto.setEndereco(funcionarioDto.getEndereco());
-			dto.setContato(funcionarioDto.getContato());
-			dto.setFuncao(funcionarioDto.getFuncao());
-			dto.setDepartamento(funcionarioDto.getDepartamento());
-			
-			dto = funcionarioService.save(dto);
-			
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-						  .path("/{id}")
-						  .buildAndExpand(dto.getId())
-						  .toUri();
-
-			return ResponseEntity.created(location).body(dto);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return ResponseEntity.created(location).body(funcionarioDto);
 	}
 
 	@ApiOperation(value = "Exclui um funcionário existente")
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "Funcionário excluído com sucesso"),
-		@ApiResponse(code = 500, message = "Ocorreu um erro interno no servidor")})
+		@ApiResponse(code = 404, message = "ID do registro não localizado para exclusão")})
 	@DeleteMapping("/funcionarios/{id}")
 	public ResponseEntity<HttpStatus> deleteFuncionario(@PathVariable("id") long id) {
-		try {
-			funcionarioService.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.OK); 
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		funcionarioService.deleteById(id);
+
+		return new ResponseEntity<>(HttpStatus.OK); 
 	}
 }

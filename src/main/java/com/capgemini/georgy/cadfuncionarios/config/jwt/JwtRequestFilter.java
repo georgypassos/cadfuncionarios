@@ -32,13 +32,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
-		final String requestTokenHeader = request.getHeader("Authorization");
+		final String requestTokenHeader = request.getHeader(JwtSecurityConstants.HEADER_STRING);
 
 		String username = null;
 		String jwtToken = null;
 		
 		// O token JWT está no formato "Bearer TOKEN". Remove a palavra "Bearer" e obtém apenas o "TOKEN" da String.
-		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+		if (requestTokenHeader != null && requestTokenHeader.startsWith(JwtSecurityConstants.TOKEN_PREFIX)) {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
@@ -47,8 +47,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			} catch (ExpiredJwtException e) {
 				System.out.println("Token JWT expirado");
 			}
-		} else {
-			logger.warn("O token JWT não começa com 'Bearer' na String");
 		}
 
 		// Após obter o token, valida-o.

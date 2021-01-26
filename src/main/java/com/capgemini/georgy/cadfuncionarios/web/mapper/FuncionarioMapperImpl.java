@@ -33,6 +33,7 @@ public class FuncionarioMapperImpl implements FuncionarioMapper {
 		dto.setContato(entity.getContato());
 		dto.setFuncao(entity.getFuncao());
 		dto.setDepartamento(entity.getDepartamento());
+		dto.setStatus(entity.getStatus().toString());
 		
 		return dto;
 	}

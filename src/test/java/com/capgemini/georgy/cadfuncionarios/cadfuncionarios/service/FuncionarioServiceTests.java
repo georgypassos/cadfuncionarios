@@ -29,7 +29,7 @@ public class FuncionarioServiceTests {
 		funcionarioDto.setFuncao("Arquiteto de Software");
 		funcionarioDto.setDepartamento("DEP 03");
 		
-		funcionarioDto = funcionarioService.save(funcionarioDto);
+		funcionarioDto = funcionarioService.save(funcionarioDto, null);
 		
 		assertThat(funcionarioDto.getId()).isNotNull();
 	}
