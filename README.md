@@ -11,7 +11,7 @@ A aplicação foi construída com:
   - [Swagger](https://swagger.io/) para a documentação das APIs;
   - [H2](https://github.com/h2database/h2database) como base de dados (in memory).
 
-Tests:
+Testes:
 
   - [JUnit](https://github.com/junit-team/junit5) framework;
   - MockMvc para chamada dos endpoints REST.
