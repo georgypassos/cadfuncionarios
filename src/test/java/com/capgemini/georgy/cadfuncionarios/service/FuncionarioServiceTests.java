@@ -1,4 +1,4 @@
-package com.capgemini.georgy.cadfuncionarios.cadfuncionarios.service;
+package com.capgemini.georgy.cadfuncionarios.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.capgemini.georgy.cadfuncionarios.exception.ResourceNotFoundException;
 import com.capgemini.georgy.cadfuncionarios.persistence.enums.StatusFuncionario;
-import com.capgemini.georgy.cadfuncionarios.service.IFuncionarioService;
 import com.capgemini.georgy.cadfuncionarios.web.dto.FuncionarioDto;
 
 @SpringBootTest

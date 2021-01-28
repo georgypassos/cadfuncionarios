@@ -1,4 +1,4 @@
-package com.capgemini.georgy.cadfuncionarios.cadfuncionarios.repository;
+package com.capgemini.georgy.cadfuncionarios.repository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

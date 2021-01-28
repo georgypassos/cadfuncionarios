@@ -1,4 +1,4 @@
-package com.capgemini.georgy.cadfuncionarios.cadfuncionarios;
+package com.capgemini.georgy.cadfuncionarios;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
