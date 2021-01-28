@@ -2,11 +2,17 @@ package com.capgemini.georgy.cadfuncionarios.config.jwt;
 
 import java.io.Serializable;
 
-public class JwtRequest implements Serializable {
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(description="Modelo de autenticação do usuário para requisição de token")
+public class JwtRequest implements Serializable {
 	private static final long serialVersionUID = 5926468583005150707L;
 
+	@ApiModelProperty(value = "Nome de usuário")
 	private String username;
+	
+	@ApiModelProperty(value = "Senha do usuário")
 	private String password;
 
 	public JwtRequest() { }

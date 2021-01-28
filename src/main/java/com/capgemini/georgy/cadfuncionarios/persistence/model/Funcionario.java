@@ -12,9 +12,6 @@ import javax.persistence.Table;
 
 import com.capgemini.georgy.cadfuncionarios.persistence.enums.StatusFuncionario;
 
-import springfox.documentation.annotations.ApiIgnore;
-
-@ApiIgnore
 @Entity
 @Table(name = "funcionario")
 public class Funcionario implements Serializable{

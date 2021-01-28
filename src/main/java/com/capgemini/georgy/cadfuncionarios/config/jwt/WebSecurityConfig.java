@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
 				// requisições que não necessitam de autenticação
-				.authorizeRequests().antMatchers("/authenticate", "/api/public/**", "/v2/api-docs",
+				.authorizeRequests().antMatchers("/api/authenticate", "/api/public/**", "/v2/api-docs",
                         "/configuration/ui", "/swagger-resources/**", "/configuration/security", 
                         "/swagger-ui.html", "/swagger-ui/**").permitAll()
 				// todas as outras requisições precisam ser autenticadas

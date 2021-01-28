@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.capgemini.georgy.cadfuncionarios.config.jwt.JwtSecurityConstants;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,12 +23,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerConfiguration {
 
-	public static final String AUTHORIZATION_HEADER = "Authorization";
-
 	private ApiInfo apiInfo() {
-		return new ApiInfo("My REST API", "Some custom description of API.", "1.0", "Terms of service",
+		return new ApiInfo("CAD Funcionários API", "API responsável pelo Gerenciamento do cadastro de Funcionários.", "1.0", "Terms of service",
 				new Contact("Georgy Passos", "https://github.com/georgypassos/", "georgy1101@gmail.com"),
-				"License of API", "API license URL", Collections.emptyList());
+				"Link do projeto", "https://github.com/georgypassos/cadfuncionarios", Collections.emptyList());
 	}
 
 	@Bean
@@ -41,7 +41,7 @@ public class SwaggerConfiguration {
 	}
 	
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+		return new ApiKey("JWT", JwtSecurityConstants.HEADER_STRING, "header");
 	}
 
 	private SecurityContext securityContext() {
